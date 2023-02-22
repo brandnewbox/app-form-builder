@@ -14,4 +14,5 @@ We wrote up a blog post about this form builder here https://brandnewbox.com/not
 
 ## Install
 
-Our current distribution is by adding the form builder to the `helpers` folder of the Rails app.
+- Add the `app_form_builder.rb` file to the `helpers` folder of the Rails app.
+- Add `default_form_builder AppFormBuilder` into your `ApplicationController` class.
