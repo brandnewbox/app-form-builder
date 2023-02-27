@@ -227,8 +227,14 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   def merge_input_options(options, user_options)
     return options if user_options.nil?
 
-    # TODO handle class merging here
-    options.merge(user_options)
+    options.deep_merge(user_options) do |key, val1, val2|
+      # When we pass in classes or stimulus related attributes we will try to merge them by concatenation rather than overwriting.
+      if [:action, :controller, :class].include?(key)
+        @template.token_list(val1, val2)
+      else
+        val2
+      end
+    end
   end
 
   def find_association(method)
