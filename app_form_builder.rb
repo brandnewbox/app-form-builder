@@ -228,6 +228,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     return options if user_options.nil?
 
     options.deep_merge(user_options) do |key, val1, val2|
+      # When we pass in classes or stimulus related attributes we will try to merge them by concatenation rather than overwriting.
       if [:action, :controller, :class].include?(key)
         @template.token_list(val1, val2)
       else
