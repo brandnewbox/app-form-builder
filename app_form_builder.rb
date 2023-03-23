@@ -5,16 +5,17 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     @form_options = options
     object_type = object_type_for_method(method)
 
-    input_type = case object_type
-    when :date then :string
-    when :integer then :string
-    else object_type
-    end
-
-    override_input_type = if options[:as]
+    input_type = if options[:as]
       options[:as]
     elsif options[:collection]
       :select
+    else
+      object_type
+    end
+
+    override_input_type = case input_type
+    when :date then :string
+    when :integer then :string
     end
 
     send("#{override_input_type || input_type}_input", method, options)
@@ -84,7 +85,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     form_group(method, options) do
       safe_join [
         (label(method, options[:label]) unless options[:label] == false),
-        string_field(method, merge_input_options({class: "form-control #{"is-invalid" if has_error?(method)}"}, options[:input_html])),
+        string_field(method, merge_input_options({input_html: {class: "form-control #{"is-invalid" if has_error?(method)}"}}, options)),
       ]
     end
   end
@@ -178,11 +179,12 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def string_field(method, options = {})
-    case object_type_for_method(method)
+    html_options = options[:input_html]
+    case options[:as] || object_type_for_method(method)
     when :date then
       birthday = method.to_s =~ /birth/
       safe_join [
-        date_field(method, merge_input_options(options, {data: {datepicker: true}})),
+        date_field(method, merge_input_options(html_options, {data: {datepicker: true}})),
         tag.div {
           date_select(method, {
             order: [:month, :day, :year],
@@ -191,20 +193,20 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
           }, {data: {date_select: true}})
         },
       ]
-    when :integer then number_field(method, options)
+    when :integer then number_field(method, html_options)
     when :string
       case method.to_s
-      when /password/ then password_field(method, options)
+      when /password/ then password_field(method, html_options)
       # when /time_zone/ then :time_zone
       # when /country/   then :country
-      when /email/ then email_field(method, options)
-      when /phone/ then telephone_field(method, options)
-      when /url/ then url_field(method, options)
+      when /email/ then email_field(method, html_options)
+      when /phone/ then telephone_field(method, html_options)
+      when /url/ then url_field(method, html_options)
       else
-        text_field(method, options)
+        text_field(method, html_options)
       end
     else
-      text_field(method, options)
+      text_field(method, html_options)
     end
   end
 
