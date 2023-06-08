@@ -81,6 +81,10 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   # Inputs and helpers
 
+  def label(method, label, options = {})
+    super(method, label, merge_input_options({class: "form-label"}, options))
+  end
+
   def string_input(method, options = {})
     form_group(method, options) do
       safe_join [
@@ -142,7 +146,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     form_group(method, options) do
       safe_join [
         (label(method, options[:label]) unless options[:label] == false),
-        custom_file_field(method, options),
+        file_field(method, merge_input_options({class: "form-control"}, options))
       ]
     end
   end
@@ -208,22 +212,6 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     else
       text_field(method, html_options)
     end
-  end
-
-  def custom_file_field(method, options = {})
-    tag.div(class: "input-group") {
-      safe_join [
-        tag.div(class: "input-group-prepend") {
-          tag.span("Upload", class: "input-group-text")
-        },
-        tag.div(class: "custom-file") {
-          safe_join [
-            file_field(method, options.merge(class: "custom-file-input", data: {controller: "file-input"})),
-            label(method, "Choose file...", class: "custom-file-label"),
-          ]
-        },
-      ]
-    }
   end
 
   def merge_input_options(options, user_options)
