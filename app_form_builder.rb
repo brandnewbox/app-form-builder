@@ -146,7 +146,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     form_group(method, options) do
       safe_join [
         (label(method, options[:label]) unless options[:label] == false),
-        file_field(method, merge_input_options({class: "form-control", data: {controller: "file-input"}}, options))
+        file_field(method, merge_input_options({class: "form-control"}, options))
       ]
     end
   end
