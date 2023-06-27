@@ -33,6 +33,10 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def label(method, label = nil, options = {})
+    super(method, label, merge_input_options({class: "form-label"}, options))
+  end
+
   private
 
   def form_group(method, options = {}, &block)
@@ -80,10 +84,6 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   # Inputs and helpers
-
-  def label(method, label, options = {})
-    super(method, label, merge_input_options({class: "form-label"}, options))
-  end
 
   def string_input(method, options = {})
     form_group(method, options) do
