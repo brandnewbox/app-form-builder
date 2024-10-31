@@ -1,3 +1,5 @@
+# To be used with Bootstrap 5
+
 class AppFormBuilder < ActionView::Helpers::FormBuilder
   delegate :tag, :safe_join, to: :@template
 
