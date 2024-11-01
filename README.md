@@ -21,6 +21,7 @@ This is a copy and paste library. There's no gem to install, just copy these fil
 ```bash
 bin/rails app:template LOCATION=https://raw.githubusercontent.com/brandnewbox/app-form-builder/main/template.rb
 ```
+---
 
 Alternatively, you can manually add the files to your Rails app and follow the steps below.
 
