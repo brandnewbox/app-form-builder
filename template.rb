@@ -25,10 +25,13 @@ RUBY
 
 if File.exist?("app/controllers/application_controller.rb")
   insert_into_file "app/controllers/application_controller.rb", after: "class ApplicationController < ActionController::Base\n" do
-    "\n  default_form_builder AppFormBuilder\n"
+    "  default_form_builder AppFormBuilder\n"
   end
 end
 
 create_file "config/initializers/blank_form_error_proc.rb", <<~RUBY
+  # Prevent Rails from adding a default error class to form fields
+  # This is necessary to allow our custom form builder to style the error messages
+  # https://github.com/brandnewbox/app-form-builder
   Rails.application.config.action_view.field_error_proc = Proc.new { |tag, instance| tag }
 RUBY
