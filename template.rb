@@ -10,7 +10,7 @@ rescue StandardError => e
   nil
 end
 
-form_builder_content = read_file("https://raw.githubusercontent.com/brandnewbox/app-form-builder/master/app_form_builder.rb")
+form_builder_content = read_file("https://raw.githubusercontent.com/brandnewbox/app-form-builder/main/app_form_builder.rb")
 
 create_file "app/helpers/app_form_builder.rb", form_builder_content
 create_file "app/helpers/app_form_builder_helper.rb", <<~RUBY

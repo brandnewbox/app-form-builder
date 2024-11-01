@@ -19,7 +19,7 @@ We wrote up a blog post about this form builder here https://brandnewbox.com/not
 This is a copy and paste library. There's no gem to install, just copy these files into your Rails app and customize from there. We have a template file that you can use to get started, or follow the steps below.
 
 ```bash
-bin/rails app:template LOCATION=https://raw.githubusercontent.com/brandnewbox/app-form-builder/master/template.rb
+bin/rails app:template LOCATION=https://raw.githubusercontent.com/brandnewbox/app-form-builder/main/template.rb
 ```
 
 - Add the `app_form_builder.rb` file to the `helpers` folder of the Rails app.
