@@ -49,9 +49,9 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   private
 
   def form_group(method, options = {}, &block)
-    label(method, class: "form-control") do
+    label(method, class: "form-control mb-3") do
       safe_join [
-        label_text(method, options[:label]),
+        label_text(method, options[:label], class: "font-bold"),
         block.call,
         hint_text(options[:hint]),
         error_text(method)
@@ -61,7 +61,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   def collection_group(method, options = {}, &block)
     safe_join [
-      label_text(method, options[:label]),
+      label_text(method, options[:label], class: "font-bold"),
       block.call,
       hint_text(options[:hint]),
       error_text(method)
@@ -79,13 +79,12 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   def hint_text(text)
     return if text.nil?
     tag.div class: "label" do
-      tag.span(text, class: "label-text-alt")
+      tag.span(text, class: "label-text-alt text-sm")
     end
   end
 
   def error_text(method)
     return unless has_error?(method)
-
     tag.div(load_error(method).join("<br />").html_safe, class: "invalid-feedback text-error")
   end
 
@@ -141,9 +140,9 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def boolean_input(method, options = {})
-    tag.div(class: "form-control") do
+    tag.div(class: "form-control mb-3") do
       safe_join [
-        label(method, options[:label], class: "label cursor-pointer p-0 justify-start") {
+        label(method, options[:label], class: "label cursor-pointer py-1 justify-start") {
           safe_join [
             check_box(method, merge_input_options({class: "checkbox me-2"}, options[:input_html])),
             label_text(method, options[:label])
@@ -156,7 +155,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def color_input(method, options = {})
-    tag.div(class: "form-control") do
+    tag.div(class: "form-control mb-3") do
       safe_join [
         label(method, options[:label], class: "label cursor-pointer p-0 justify-start") {
           safe_join [
@@ -171,7 +170,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def toggle_input(method, options = {})
-    tag.div(class: "form-control") do
+    tag.div(class: "form-control mb-3") do
       safe_join [
         label(method, options[:label], class: "label cursor-pointer p-0 justify-start") {
           safe_join [
@@ -240,15 +239,9 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
     collection_group(method, options) do
       send(form_builder_method, method, options[:collection], options[:value_method], options[:text_method]) do |b|
-        # tag.div(class: "custom-control #{custom_class}") {
-        #   safe_join [
-        #     b.send(input_builder_method, class: "custom-control-input"),
-        #     b.label(class: "custom-control-label")
-        #   ]
-        # }
         tag.div(class: "form-control") do
           safe_join [
-            label(b, for: nil, class: "label cursor-pointer p-0 justify-start") {
+            label(b, for: nil, class: "label cursor-pointer py-1 justify-start") {
               safe_join [
                 b.send(input_builder_method, merge_input_options({class: custom_class}, options[:input_html])),
                 label_text(method, b.text)
