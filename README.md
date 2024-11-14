@@ -2,7 +2,7 @@
 
 The canonical implementation of BNB's custom form builder.
 
-In the past we've often reached for gems like SimpleForm to implement custom form builders. From builder gems are amazing feats of engineering, but they were adding complexity to our apps and another layer of config to learn and manage. We found this in-app form builder approach to be more approachable for our team.
+In the past we've often reached for gems like SimpleForm to implement custom form builders. Form builder gems are amazing feats of engineering, but they were adding complexity to our apps and another layer of config to learn and manage. We found this in-app form builder approach to be more approachable for our team.
 
 By using an in-app form builder we get a few advantages
 - a unified API between all forms at BNB
